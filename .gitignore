@@ -1,0 +1,44 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Cursor (local artifacts)
+.cursor/
+
+# Logs & runtime artifacts
+*.log
+*.tmp
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node (just in case)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ansible
+*.retry
+.ansible/
+
+# Secrets (common local patterns)
+.env
+.env.*
+*.local
