@@ -1,0 +1,53 @@
+---
+- name: Ensure directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - /etc/megacable-reverse-proxy
+    - /etc/megacable-reverse-proxy/conf.d
+    - /var/log/megacable-reverse-proxy
+    - /run/megacable-reverse-proxy
+
+- name: Deploy nginx.conf
+  ansible.builtin.copy:
+    src: nginx/nginx.conf
+    dest: /etc/megacable-reverse-proxy/nginx.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Validate nginx config
+    - Reload reverse proxy
+
+- name: Deploy vhost routing config
+  ansible.builtin.copy:
+    src: nginx/conf.d/web.xviewplusn2.com.mx.conf
+    dest: /etc/megacable-reverse-proxy/conf.d/web.xviewplusn2.com.mx.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Validate nginx config
+    - Reload reverse proxy
+
+- name: Deploy systemd unit
+  ansible.builtin.copy:
+    src: systemd/megacable-reverse-proxy.service
+    dest: /etc/systemd/system/megacable-reverse-proxy.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Systemd daemon-reload
+    - Restart reverse proxy
+
+- name: Ensure reverse proxy service enabled and started
+  ansible.builtin.systemd:
+    name: megacable-reverse-proxy
+    enabled: true
+    state: started
+

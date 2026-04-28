@@ -1,0 +1,24 @@
+[Unit]
+Description=Megacable reverse proxy (Nginx)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+PIDFile=/run/megacable-reverse-proxy/nginx.pid
+
+ExecStartPre=/usr/sbin/nginx -t -c /etc/megacable-reverse-proxy/nginx.conf
+ExecStart=/usr/sbin/nginx -c /etc/megacable-reverse-proxy/nginx.conf
+ExecReload=/usr/sbin/nginx -t -c /etc/megacable-reverse-proxy/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+Restart=on-failure
+RestartSec=2s
+
+LimitNOFILE=65535
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+

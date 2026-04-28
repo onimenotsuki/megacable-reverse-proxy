@@ -1,0 +1,19 @@
+---
+- name: Systemd daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Validate nginx config
+  ansible.builtin.command: /usr/sbin/nginx -t -c /etc/megacable-reverse-proxy/nginx.conf
+  changed_when: false
+
+- name: Reload reverse proxy
+  ansible.builtin.systemd:
+    name: megacable-reverse-proxy
+    state: reloaded
+
+- name: Restart reverse proxy
+  ansible.builtin.systemd:
+    name: megacable-reverse-proxy
+    state: restarted
+

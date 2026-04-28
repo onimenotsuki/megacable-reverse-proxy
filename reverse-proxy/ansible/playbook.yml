@@ -1,0 +1,9 @@
+---
+- name: Deploy Megacable reverse proxy nginx config
+  hosts: megacable_reverse_proxy
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: megacable_reverse_proxy_nginx
+
