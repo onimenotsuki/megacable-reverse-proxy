@@ -1,0 +1,4 @@
+[submodule "megacable-diagrams"]
+	path = megacable-diagrams
+	url = https://github.com/onimenotsuki/megacable-diagrams
+	branch = main
