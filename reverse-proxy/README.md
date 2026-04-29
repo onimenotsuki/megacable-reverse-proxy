@@ -68,6 +68,8 @@ Documentación extendida (lee esto si vas a operar o cambiar algo):
 - `docs/02-despliegue-ansible.md`
 - `docs/03-troubleshooting.md`
 - `docs/04-como-agregar-rutas.md`
+- `docs/07-git-flujo-de-trabajo.md`
+- `docs/08-git-resolver-problemas.md`
 
 ## Despliegue con Ansible (recomendado)
 
