@@ -113,6 +113,14 @@ sudo systemctl enable --now megacable-reverse-proxy
 
 ## Validación (smoke tests)
 
+Scripts reutilizables (desde el directorio `reverse-proxy/` o con ruta absoluta):
+
+| Script | Uso |
+|--------|-----|
+| `scripts/smoke-test.sh` | Comprueba BFF `is_alive`, rutas SQUID (sin 502/503/504) y 404 en ruta desconocida. Variables: `BASE_URL` (default `http://127.0.0.1`), `VHOST` (default `web.xviewplusn2.com.mx`). |
+| `scripts/validate-on-node.sh` | **En el nodo** (201/202): `nginx -t`, servicio activo y luego `smoke-test.sh`. |
+| `scripts/check-whitelist-dns.sh` | Resuelve DNS de cada dominio en `docs/white-list.csv` (sanidad de allowlist). |
+
 Validar sintaxis y estado:
 
 ```bash
