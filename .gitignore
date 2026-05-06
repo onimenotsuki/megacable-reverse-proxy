@@ -10,8 +10,10 @@
 *.swo
 *~
 
-# Cursor (local artifacts)
-.cursor/
+# Cursor: ignore local IDE state but keep shared project rules in git
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
 
 # Logs & runtime artifacts
 *.log

@@ -1,0 +1,12 @@
+---
+description: Ansible role conventions for the reverse proxy deployment
+globs: reverse-proxy/ansible/**/*
+alwaysApply: false
+---
+
+# Ansible (reverse proxy)
+
+- **Inventory and playbook**: `reverse-proxy/ansible/inventory.ini`, `playbook.yml`. Do not commit secrets; use Ansible Vault or CI variables.
+- **Role `megacable_reverse_proxy_nginx`**: static deploy via `copy:` from `roles/megacable_reverse_proxy_nginx/files/` (see `tasks/main.yml`). Prefer editing files under `files/nginx/` and `files/systemd/` for what reaches production.
+- **Handlers**: config changes trigger `nginx -t` and reload/restart; keep handler names and notify chains consistent.
+- **Validation**: from `reverse-proxy/ansible/`, run `ansible-playbook -i inventory.ini playbook.yml --syntax-check` and `ansible-lint` to match GitLab `validate:ansible`.

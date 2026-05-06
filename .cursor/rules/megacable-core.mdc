@@ -1,0 +1,13 @@
+---
+description: Megacable repo layout, deploy source of truth, and language conventions
+alwaysApply: true
+---
+
+# Megacable — core context
+
+- This repo centers on **Nginx reverse proxy** automation: `reverse-proxy/ansible/` and GitLab CI in `.gitlab-ci.yml`.
+- **Deployments copy config from** `reverse-proxy/ansible/roles/megacable_reverse_proxy_nginx/files/` (not only from `reverse-proxy/nginx/`). When changing Nginx or the systemd unit, update the **role `files/`** tree and keep `reverse-proxy/nginx/` and `reverse-proxy/systemd/` **in sync** for manual-install parity.
+- Prefer **small, focused diffs**. Do not refactor unrelated areas or add unsolicited markdown docs.
+- **Comments in code and shell scripts**: English. Existing Spanish prose in `reverse-proxy/docs/` may stay as-is unless the task is to translate.
+- Treat internal IPs and hostnames as **sensitive operational context**; do not invent connectivity—follow `reverse-proxy/README.md` and `reverse-proxy/docs/`.
+- After routing or upstream edits, point operators to `reverse-proxy/scripts/smoke-test.sh` or `validate-on-node.sh` as appropriate.

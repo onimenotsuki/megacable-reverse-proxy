@@ -1,0 +1,11 @@
+---
+description: GitLab CI pipeline stages and deploy behavior for this repo
+globs: .gitlab-ci.yml
+alwaysApply: false
+---
+
+# GitLab CI
+
+- **Stages**: `validate` then `deploy`. Validate uses Python image, installs Ansible and `ansible-lint`, runs syntax-check and lint from `ANSIBLE_DIR` (`reverse-proxy/ansible`).
+- **Deploy**: manual job on default branch or tags only; uses `alpine`, `SSH_PRIVATE_KEY` (and optionally `SSH_KNOWN_HOSTS`), packs repo tarball, copies to control node, runs `ansible-playbook` with optional `ANSIBLE_ARGS`.
+- **Variables**: `DEPLOY_HOST`, `DEPLOY_USER`, `REMOTE_BASE_DIR` are defined in YAML—treat changes as operational and coordinate with the team.

@@ -1,0 +1,14 @@
+---
+description: Nginx vhost behavior, headers, and routing rules for web.xviewplusn2.com.mx
+globs: reverse-proxy/**/nginx/**/*.conf
+alwaysApply: false
+---
+
+# Reverse proxy Nginx routing
+
+- **Server name**: `web.xviewplusn2.com.mx`; listen `80`. Preserve `Host` and set `X-Forwarded-*` including `X-Forwarded-Proto` via the `map` + `$meg_x_forwarded_proto` pattern already in `nginx.conf`.
+- **SQUID paths** (proxy to pool on `:3128`): `/RTEFacade`, `/compass`, `/search`, `/personalization`, `/SessionManagement` — use both exact (`location =`) and prefix (`location ^~ .../`) blocks where the repo already does.
+- **BFF paths** (proxy to pools on `:80`): `/rtvbff/linear`, `/rtvbff/vod`, `/rtvbff/image` — `proxy_pass` must keep full URI semantics consistent with existing `location ^~` blocks.
+- **Default**: `location /` should **fail closed** (`return 404`) for unknown paths unless product explicitly requires otherwise.
+- **Upstream tuning**: keep `max_fails`, `fail_timeout`, and `keepalive` consistent with existing style when adding servers.
+- When adding a route, follow `reverse-proxy/docs/04-como-agregar-rutas.md` and mirror changes in **both** `reverse-proxy/nginx/` and `roles/.../files/nginx/` trees.

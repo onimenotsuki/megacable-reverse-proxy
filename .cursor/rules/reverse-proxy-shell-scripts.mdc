@@ -1,0 +1,12 @@
+---
+description: Bash smoke and validation scripts under reverse-proxy/scripts
+globs: reverse-proxy/scripts/**/*.sh
+alwaysApply: false
+---
+
+# Shell scripts (`reverse-proxy/scripts/`)
+
+- Use `bash` with `set -euo pipefail` for new scripts; keep scripts **idempotent** and safe to re-run.
+- **Comments and echoed operator messages**: English (user preference for code-adjacent text).
+- Prefer **environment variables** for URLs and hostnames (`BASE_URL`, `VHOST`, `CONFIG`) with documented defaults, as in `smoke-test.sh` and `validate-on-node.sh`.
+- Do not embed SSH keys or tokens. Scripts should fail clearly with `stderr` messages when prerequisites are missing (`curl`, `nginx`, `python3`, etc.).
